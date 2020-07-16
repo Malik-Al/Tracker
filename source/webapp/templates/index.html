@@ -5,13 +5,14 @@
 
 {% block content %}
     <h1 class="cent">Task</h1>
-    {% for foo in task %}
-        <h2>Заголовок: {{ foo.summary }}</h2>
-        <p>Текст: {{ foo.description }}</p>
-        <p>Статус: {{ foo.status }}</p>
-        <p>type: {{ foo.type }}</p>
-        <p>created_at: {{ foo.created_at }}</p>
-        <br>
+    {% for task in tasks %}
+        <h2>Заголовок: {{ task.summary }}</h2>
+        <p>Текст: {{ task.description }}</p>
+        <p>Статус: {{ task.status }}</p>
+        <p>Тип: {{ task.type }}</p>
+        <p>created_at: {{ task.created_at }}</p>
+        <p> <a href="{% url 'task_view' task.pk %}">More...</a></p>
+        <hr>
     {% endfor %}
 
 {% endblock%}

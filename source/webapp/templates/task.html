@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{#{% block title %}{{ task.summary }}{% endblock %}#}
+
+{% block menu %}
+    <li><a href="{% url 'task_view'  task.pk %}">Edit</a></li>
+{#     <li><a href="{% url 'article_delete' article.pk %}">Delete</a></li>#}
+{% endblock %}
+
+{% block content %}
+    <h1 class="crearet">Заголовок: {{ task.summary  }}</h1>
+    <p>Статус: {{ task.status }}<p>
+    <p>Тип: {{ task.type| default_if_none:'Без категорий' }}
+    <p>created_at: {{ task.created_at|date:'d.n.Y H:i:s' }}</p>
+    <div class="pre">Текст: {{ task.description }}</div>
+{% endblock %}
