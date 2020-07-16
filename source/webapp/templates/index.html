@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="cent">Task</h1>
+    {% for foo in task %}
+        <h2>Заголовок: {{ foo.summary }}</h2>
+        <p>Текст: {{ foo.description }}</p>
+        <p>Статус: {{ foo.status }}</p>
+        <p>type: {{ foo.type }}</p>
+        <p>created_at: {{ foo.created_at }}</p>
+        <br>
+    {% endfor %}
+
+{% endblock%}
