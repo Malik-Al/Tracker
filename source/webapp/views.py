@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.views.generic import TemplateView
-from webapp.forms import Taskform
-from webapp.models import Task
+from webapp.forms import Taskform, StatusForm, TypeForm
+from webapp.models import Task, Status, Type
 
 
 class IndexView(TemplateView):
@@ -81,3 +81,77 @@ class TaskDeleteView(View):
         task = get_object_or_404(Task, pk=task_pk)
         task.delete()
         return redirect('index')
+
+
+
+
+
+
+class StatusIndexView(TemplateView):
+    template_name = 'status/status_index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['statuses'] = Status.objects.all()
+        return context
+
+
+
+
+class StatusCreateView(View):
+    def get(self, request, *args, **kwargs):
+            form = StatusForm()
+            return render(request, 'status/status_create.html', context={'form': form})
+    def post(self, request, *args, **kwargs):
+            form = StatusForm(data=request.POST)
+            if form.is_valid():
+                Status.objects.create(
+                    status=form.cleaned_data['status'],
+
+                )
+                return redirect('status_index')
+            else:
+                return render(request, 'status/status_create.html', context={'form': form})
+
+#
+#
+# class StatusUpdateView(View):
+#     def get(self, request, *args, **kwargs):
+#         task_pk = kwargs.get('pk')
+#         task = get_object_or_404(Task, pk=task_pk)
+#         form = Taskform(data={
+#             'summary': task.summary,
+#             'description': task.description,
+#             'status': task.status_id,
+#             'type': task.type_id
+#
+#         })
+#         return render(request, 'task/update.html', context={'form': form, 'task': task})
+#
+#     def post(self, request, *args, **kwargs):
+#         task_pk = kwargs.get('pk')
+#         task = get_object_or_404(Task, pk=task_pk)
+#         form = Taskform(data=request.POST)
+#         if form.is_valid():
+#             task.summary = form.cleaned_data['summary']
+#             task.description = form.cleaned_data['description']
+#             task.status = form.cleaned_data['status']
+#             task.type = form.cleaned_data['type']
+#             task.save()
+#             return redirect('index')
+#         else:
+#             return render(request, 'task/update.html', context={'form': form, 'task': task})
+#
+#
+# class StatusDeleteView(View):
+#     def get(self, request, *args, **kwargs):
+#         task_pk = kwargs.get('pk')
+#         task = get_object_or_404(Task, pk=task_pk)
+#         return render(request, 'task/delete.html', context={'task': task})
+#     def post(self, request, *args, **kwargs):
+#         task_pk = kwargs.get('pk')
+#         task = get_object_or_404(Task, pk=task_pk)
+#         task.delete()
+#         return redirect('index')
+
+
