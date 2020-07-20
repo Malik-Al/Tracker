@@ -5,13 +5,13 @@
 {% block menu %}
     <li><a href="{% url 'task_view'  task.pk %}">Edit</a></li>
      <li><a href="{% url 'task_delete' task.pk %}">Delete</a></li>
+
 {% endblock %}
 
 {% block content %}
     <h1 class="crearet">Заголовок: {{ task.summary  }}</h1>
     <p>Статус: {{ task.status }}<p>
     <p>Тип: {{ task.type| default_if_none:'Без категорий' }}
-    <li><a href="{% url 'status_create' task.pk %}">create</a></li>
     <p>created_at: {{ task.created_at|date:'d.n.Y H:i:s' }}</p>
     <div class="pre">Текст: {{ task.description }}</div>
 {% endblock %}

@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+    <li><a href="{% url 'status_index' %}">Statuses</a></li>
+        <li><a href="{% url 'type_index' %}">Types</a></li>
     <h1 class="cent">Task</h1>
     {% for task in tasks %}
         <h2>Заголовок: {{ task.summary }}</h2>

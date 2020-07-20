@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
-
     {% block title %}Create Status{% endblock %}
 
-{% block content %}
+{% block menu %}
+        <li class="nav-item">
+            <a href="{% url 'status_index' %}" class="nav-link">Statuses</a>
+        </li>
+{% endblock %}
 
-<h1 class="crearet"> Create Article</h1>
-<form method="POST" action="{% url "status_create" %}">
+{% block content %}
+<h1 class="crearet"> Create Status</h1>
+  <form action="{% url 'status_create' %}" method="post">
+      {% csrf_token %}
    {% include 'partial/task_form.html' with button_text='Create' %}
 </form>
 {% endblock %}

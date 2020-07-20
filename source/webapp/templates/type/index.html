@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block menu %}
+    <li><a href="{% url 'type_create'  %}">Add Type</a></li>
+{% endblock %}
+
+{% block content %}
+    <h1 class="cent">Type</h1>
+  {% for type in types %}
+            <p>Статус: {{ type.name}}</p>
+             <a href="{% url 'type_update' type.pk %}">Edit</a>
+             <a href="{% url 'type_delete' type.pk %}">Delete</a>
+  {% endfor %}
+
+{% endblock%}

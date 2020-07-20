@@ -3,7 +3,7 @@ from django.forms import widgets
 from webapp.models import Status, Type
 
 
-class Taskform(forms.Form):
+class TaskForm(forms.Form):
     summary = forms.CharField(max_length=200, required=True, label='Заголовок')
     description = forms.CharField(max_length=3000, required=True, label='Текст', widget=widgets.Textarea)
 
