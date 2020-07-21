@@ -1,17 +1,28 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from webapp.forms import TaskForm, StatusForm, TypeForm
 from webapp.models import Task, Status, Type
 
 
-class IndexView(TemplateView):
-    template_name = 'task/index.html'
+# class IndexView(TemplateView):
+#     template_name = 'task/index.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['tasks'] = Task.objects.all()
+#         return context
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tasks'] = Task.objects.all()
-        return context
+
+class IndexView(ListView):
+    template_name = 'task/index.html'
+    model = Task
+    context_object_name = 'tasks'
+    paginate_by = 1
+    paginate_orphans = 1
+
+
+
 
 
 class TaskView(TemplateView):
@@ -86,14 +97,10 @@ class TaskDeleteView(View):
 
 
 
-
-class StatusIndexView(TemplateView):
+class StatusIndexView(ListView):
     template_name = 'status/status_index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['statuses'] = Status.objects.all()
-        return context
+    model = Status
+    context_object_name = 'statuses'
 
 
 
@@ -153,16 +160,11 @@ class StatusDeleteView(View):
 
 
 
-
-
-
-class TypeIndexView(TemplateView):
+class TypeIndexView(ListView):
     template_name = 'type/index.html'
+    model = Type
+    context_object_name = 'types'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['types'] = Type.objects.all()
-        return context
 
 
 

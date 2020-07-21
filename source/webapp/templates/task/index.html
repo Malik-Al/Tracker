@@ -5,9 +5,16 @@
 {% endblock %}
 
 {% block content %}
+    <h1 style="text-align: center">Task</h1>
+
+{% if is_paginated %}
+   {% include 'partial/pagination.html' %}
+{% endif %}
+
     <li><a href="{% url 'status_index' %}">Statuses</a></li>
-        <li><a href="{% url 'type_index' %}">Types</a></li>
-    <h1 class="cent">Task</h1>
+    <li><a href="{% url 'type_index' %}">Types</a></li>
+
+
     {% for task in tasks %}
         <h2>Заголовок: {{ task.summary }}</h2>
         <p>Текст: {{ task.description }}</p>
@@ -22,5 +29,9 @@
         </p>
         <hr>
     {% endfor %}
+
+{% if is_paginated %}
+   {% include 'partial/pagination.html' %}
+{% endif %}
 
 {% endblock%}
