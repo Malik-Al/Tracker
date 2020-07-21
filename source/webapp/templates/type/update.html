@@ -7,6 +7,6 @@
 {% block content %}
     <h1>Edit</h1>
     <form action="{% url 'type_update' type.pk %}" method="post">
-        {% include 'partial/task_form.html' with button_text='Update' %}
+        {% include 'partial/form.html' with button_text='Update' %}
     </form>
 {% endblock %} 
