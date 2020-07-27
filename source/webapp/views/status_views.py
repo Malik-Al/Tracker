@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from webapp.forms import StatusForm
 from webapp.models import Status
 
@@ -12,20 +13,13 @@ class StatusIndexView(ListView):
 
 
 
-class StatusCreateView(View):
-    def get(self, request, *args, **kwargs):
-            form = StatusForm()
-            return render(request, 'status/status_create.html', context={'form': form})
-    def post(self, request, *args, **kwargs):
-            form = StatusForm(data=request.POST)
-            if form.is_valid():
-                Status.objects.create(
-                    name=form.cleaned_data['status'],
+class StatusCreateView(CreateView):
+    template_name = 'status/status_create.html'
+    form_class = StatusForm
+    model = Status
 
-                )
-                return redirect('status_index')
-            else:
-                return render(request, 'status/status_create.html', context={'form': form})
+    def get_success_url(self):
+        return reverse('status_index')
 
 
 

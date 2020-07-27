@@ -1,17 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 from webapp.forms import TaskForm
 from webapp.models import Task
 
-
-# class IndexView(TemplateView):
-#     template_name = 'task/index.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['tasks'] = Task.objects.all()
-#         return context
 
 
 class IndexView(ListView):
@@ -20,8 +13,6 @@ class IndexView(ListView):
     context_object_name = 'tasks'
     paginate_by = 1
     paginate_orphans = 1
-
-
 
 
 
@@ -35,22 +26,13 @@ class TaskView(TemplateView):
         return context
 
 
-class TaskCreateView(View):
-    def get(self, request, *args, **kwargs):
-            form = TaskForm()
-            return render(request, 'task/create.html', context={'form': form})
-    def post(self, request, *args, **kwargs):
-            form = TaskForm(data=request.POST)
-            if form.is_valid():
-                Task.objects.create(
-                    summary=form.cleaned_data['summary'],
-                    description=form.cleaned_data['description'],
-                    status=form.cleaned_data['status'],
-                    type=form.cleaned_data['type']
-                )
-                return redirect('index')
-            else:
-                return render(request, 'task/create.html', context={'form': form})
+class TaskCreateView(CreateView):
+    template_name = 'task/create.html'
+    form_class = TaskForm
+    model = Task
+
+    def get_success_url(self):
+        return reverse('task_view', kwargs={'pk': self.object.pk})
 
 
 
