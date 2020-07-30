@@ -1,9 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
-from django.views import View
+from django.shortcuts import  get_object_or_404
+from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView
 from webapp.forms import TaskForm
 from webapp.models import Task
+from .base_views import UpdateView, DeleteView
 
 
 
@@ -36,44 +36,25 @@ class TaskCreateView(CreateView):
 
 
 
-class TaskUpdateView(View):
-    def get(self, request, *args, **kwargs):
-        task_pk = kwargs.get('pk')
-        task = get_object_or_404(Task, pk=task_pk)
-        form = TaskForm(data={
-            'summary': task.summary,
-            'description': task.description,
-            'status': task.status_id,
-            'type': task.type_id
+class TaskUpdateView(UpdateView):
+    template_name = 'task/update.html'
+    form_class = TaskForm
+    model = Task
+    context_key = 'task'
 
-        })
-        return render(request, 'task/update.html', context={'form': form, 'task': task})
-
-    def post(self, request, *args, **kwargs):
-        task_pk = kwargs.get('pk')
-        task = get_object_or_404(Task, pk=task_pk)
-        form = TaskForm(data=request.POST)
-        if form.is_valid():
-            task.summary = form.cleaned_data['summary']
-            task.description = form.cleaned_data['description']
-            task.status = form.cleaned_data['status']
-            task.type = form.cleaned_data['type']
-            task.save()
-            return redirect('index')
-        else:
-            return render(request, 'task/update.html', context={'form': form, 'task': task})
+    def get_redirect_url(self):
+        return reverse('task_view', kwargs={'pk': self.object.pk})
 
 
-class TaskDeleteView(View):
-    def get(self, request, *args, **kwargs):
-        task_pk = kwargs.get('pk')
-        task = get_object_or_404(Task, pk=task_pk)
-        return render(request, 'task/delete.html', context={'task': task})
-    def post(self, request, *args, **kwargs):
-        task_pk = kwargs.get('pk')
-        task = get_object_or_404(Task, pk=task_pk)
-        task.delete()
-        return redirect('index')
+
+class TaskDeleteView(DeleteView):
+    template_name = 'task/delete.html'
+    context_key = 'task'
+    model = Task
+    redirect_url = reverse_lazy('index')
+
+
+
 
 
 
