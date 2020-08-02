@@ -1,5 +1,5 @@
 from django import forms
-from webapp.models import Status, Type, Task
+from webapp.models import Status, Type, Task, Project
 
 
 class TaskForm(forms.ModelForm):
@@ -19,3 +19,8 @@ class TypeForm(forms.ModelForm):
         model = Type
         exclude = []
 
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        exclude = []

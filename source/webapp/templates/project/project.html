@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block menu %}
+
+{% endblock %}
+
+{% block content %}
+    <h1 class="crearet">Название: {{ project.name  }}</h1>
+    <div class="pre">Описание: {{ project.description }}</div>
+    <p>created_at: {{ project.created_at|date:'d.n.Y H:i:s' }}</p>
+    <p>updated_at: {{ project.updated_at|date:'d.n.Y H:i:s' }}</p>
+
+{% endblock %}
