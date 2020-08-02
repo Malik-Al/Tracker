@@ -1,8 +1,7 @@
-from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.urls import reverse
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from webapp.forms import StatusForm
 from webapp.models import Status
-from .base_views import UpdateView, DeleteView
 
 
 
@@ -24,19 +23,24 @@ class StatusCreateView(CreateView):
 
 
 
+
 class StatusUpdateView(UpdateView):
+    model = Status
     template_name = 'status/status_update.html'
     form_class = StatusForm
-    model = Status
-    context_key = 'status'
+    context_object_name = 'status'
 
-    def get_redirect_url(self):
+    def get_success_url(self):
         return reverse('status_index')
 
 
 
+
 class StatusDeleteView(DeleteView):
-    template_name = 'status/status_delete.html'
-    context_key = 'status'
     model = Status
-    redirect_url = reverse_lazy('status_index')
+    template_name = 'status/status_delete.html'
+    form_class = StatusForm
+    context_object_name = 'status'
+
+    def get_success_url(self):
+        return reverse('status_index')

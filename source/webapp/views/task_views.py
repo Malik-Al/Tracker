@@ -1,9 +1,8 @@
 from django.shortcuts import  get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 from webapp.forms import TaskForm
 from webapp.models import Task
-from .base_views import UpdateView, DeleteView
 
 
 
@@ -26,6 +25,8 @@ class TaskView(TemplateView):
         return context
 
 
+
+
 class TaskCreateView(CreateView):
     template_name = 'task/create.html'
     form_class = TaskForm
@@ -36,26 +37,21 @@ class TaskCreateView(CreateView):
 
 
 
+
 class TaskUpdateView(UpdateView):
+    model = Task
     template_name = 'task/update.html'
     form_class = TaskForm
-    model = Task
-    context_key = 'task'
+    context_object_name = 'task'
 
-    def get_redirect_url(self):
+    def get_success_url(self):
         return reverse('task_view', kwargs={'pk': self.object.pk})
 
 
 
 class TaskDeleteView(DeleteView):
     template_name = 'task/delete.html'
-    context_key = 'task'
     model = Task
-    redirect_url = reverse_lazy('index')
-
-
-
-
-
-
+    context_key = 'task'
+    success_url = reverse_lazy('index')
 
