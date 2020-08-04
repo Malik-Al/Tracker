@@ -10,6 +10,11 @@ class ProjectIndexView(ListView):
     model = Project
     context_object_name = 'projects'
 
+    def get_queryset(self):
+        return Project.objects.all().order_by('created_at')
+
+
+
 
 
 class ProjectView(TemplateView):
