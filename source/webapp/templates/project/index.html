@@ -10,7 +10,7 @@
         <h2>Название: {{ project.name }}</h2>
         <p>Описание: {{ project.description }}</p>
         <p>created_at: : {{ project.created_at }}</p>
-        <p>updated_at: {{ task.updated_at }}</p>
+        <p>updated_at: {{ project.updated_at }}</p>
         <p>
             <a href="{% url 'project_view' project.pk %}">More...</a>
             <a href="{% url 'project_update' project.pk %}">Edit</a>
