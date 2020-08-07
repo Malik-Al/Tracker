@@ -1,7 +1,9 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
+from django.utils.http import urlencode
 from django.views.generic import ListView, TemplateView, CreateView, UpdateView, DeleteView
-from webapp.forms import ProjectForm
+from webapp.forms import ProjectForm, SimpleSearchForm
 from webapp.models import Project
 
 
@@ -10,11 +12,32 @@ class ProjectIndexView(ListView):
     model = Project
     context_object_name = 'projects'
 
+    # def get_queryset(self):
+    #     return Project.objects.all().order_by('created_at')
+
+
+    def get(self, request, *args, **kwargs):
+        form = SimpleSearchForm(self.request.GET)
+        query = None
+        if form.is_valid():
+            query = form.cleaned_data['search']
+        self.form = form
+        self.query = query
+        return super().get(request, *args, **kwargs)
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        if self.query:
+            context['query'] = urlencode({'search': self.query})
+        context['form'] = self.form
+        return context
+
     def get_queryset(self):
-        return Project.objects.all().order_by('created_at')
-
-
-
+        queryset = super().get_queryset()
+        if self.query:
+            queryset = queryset.filter(Q(name__icontains=self.query))
+        return queryset
 
 
 class ProjectView(TemplateView):

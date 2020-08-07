@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'partial/simple_search.html' %}
 
     {% for project in projects %}
         <h2>Название: {{ project.name }}</h2>
