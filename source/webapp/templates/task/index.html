@@ -6,6 +6,8 @@
 
 {% block content %}
     <h1 style="text-align: center">Task</h1>
+        {% include 'partial/simple_search.html' %}
+
 
 {% if is_paginated %}
    {% include 'partial/pagination.html' %}
