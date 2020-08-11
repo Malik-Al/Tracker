@@ -20,7 +20,7 @@ class TypeCreateView(LoginRequiredMixin, CreateView):
     model = Type
 
     def get_success_url(self):
-        return reverse('type_index')
+        return reverse('webapp:type_index')
 
 
 
@@ -32,7 +32,7 @@ class TypeUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'type'
 
     def get_success_url(self):
-        return reverse('type_index')
+        return reverse('webapp:type_index')
 
 
 
@@ -44,6 +44,6 @@ class TypeDeleteView(LoginRequiredMixin, DeleteView):
     context_object_name = 'type'
 
     def get_success_url(self):
-        return reverse('type_index')
+        return reverse('webapp:type_index')
 
 

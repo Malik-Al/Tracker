@@ -3,13 +3,13 @@
 
 {% block menu %}
         <li class="nav-item">
-            <a href="{% url 'type_index' %}" class="nav-link">Type</a>
+            <a href="{% url 'webapp:type_index' %}" class="nav-link">Type</a>
         </li>
 {% endblock %}
 
 {% block content %}
 <h1 class="crearet"> Create Type</h1>
-  <form action="{% url 'type_create' %}" method="post">
+  <form action="{% url 'webapp:type_create' %}" method="post">
       {% csrf_token %}
    {% include 'partial/form.html' with button_text='Create' %}
 </form>

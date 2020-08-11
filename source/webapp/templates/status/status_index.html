@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block menu %}
-    <li><a href="{% url 'status_create'  %}">Add Status</a></li>
+    <li><a href="{% url 'webapp:status_create'  %}">Add Status</a></li>
 {% endblock %}
 
 {% block content %}
     <h1 class="cent">Statuses</h1>
   {% for status in statuses %}
             <p>Статус: {{ status.name}}</p>
-             <a href="{% url 'status_update' status.pk %}">Edit</a>
-             <a href="{% url 'status_delete' status.pk %}">Delete</a>
+             <a href="{% url 'webapp:status_update' status.pk %}">Edit</a>
+             <a href="{% url 'webapp:status_delete' status.pk %}">Delete</a>
   {% endfor %}
 
 

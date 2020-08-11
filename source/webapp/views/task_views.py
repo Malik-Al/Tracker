@@ -58,7 +58,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
 
     def get_success_url(self):
-        return reverse('task_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
 
 
@@ -70,7 +70,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'task'
 
     def get_success_url(self):
-        return reverse('task_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
 
 
@@ -78,5 +78,5 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'task/delete.html'
     model = Task
     context_key = 'task'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('webapp:index')
 
