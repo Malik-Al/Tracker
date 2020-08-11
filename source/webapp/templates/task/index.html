@@ -5,36 +5,41 @@
 {% endblock %}
 
 {% block content %}
-    <h1 style="text-align: center">Task</h1>
-        {% include 'partial/simple_search.html' %}
-
-
-{% if is_paginated %}
-   {% include 'partial/pagination.html' %}
-{% endif %}
 
     <li><a href="{% url 'webapp:status_index' %}">Statuses</a></li>
     <li><a href="{% url 'webapp:type_index' %}">Types</a></li>
     <li><a href="{% url 'webapp:project_index' %}">Projects</a></li>
 
 
-    {% for task in tasks %}
-        <h2>Заголовок: {{ task.summary }}</h2>
-        <p>Текст: {{ task.description }}</p>
-        <p>Статус: {{ task.status }}</p>
-        <p>Тип: {{ task.type }}</p>
-        <p>created_at: {{ task.created_at }}</p>
-        <p>
-            <a href="{% url 'webapp:task_view' task.pk %}">More...</a>
-            <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>
-            <a href="{% url 'webapp:task_delete' task.pk %}">Delete</a>
-        </p>
-        </p>
-        <hr>
-    {% endfor %}
+
+    <h1 style="text-align: center">Task</h1>
+        {% include 'partial/simple_search.html' %}
 
 {% if is_paginated %}
    {% include 'partial/pagination.html' %}
 {% endif %}
+
+
+
+    {% for task in tasks %}
+        <div class="text-center">
+            <h2>Заголовок: {{ task.summary }}</h2>
+            <p>Текст: {{ task.description }}</p>
+            <p>Статус: {{ task.status }}</p>
+            <p>Тип: {{ task.type }}</p>
+            <p>created_at: {{ task.created_at }}</p>
+            <p>
+                <a href="{% url 'webapp:task_view' task.pk %}">More...</a>
+                <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>
+                <a href="{% url 'webapp:task_delete' task.pk %}">Delete</a>
+            </p>
+            </p>
+            <hr>
+        </div>
+    {% endfor %}
+
+{#{% if is_paginated %}#}
+{#   {% include 'partial/pagination.html' %}#}
+{#{% endif %}#}
 
 {% endblock%}

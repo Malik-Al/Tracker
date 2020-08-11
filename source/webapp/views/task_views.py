@@ -13,7 +13,7 @@ class IndexView(ListView):
     template_name = 'task/index.html'
     model = Task
     context_object_name = 'tasks'
-    paginate_by = 1
+    paginate_by = 2
     paginate_orphans = 1
 
     def get(self, request, *args, **kwargs):
