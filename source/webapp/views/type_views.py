@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from webapp.forms import TypeForm
@@ -13,7 +14,7 @@ class TypeIndexView(ListView):
 
 
 
-class TypeCreateView(CreateView):
+class TypeCreateView(LoginRequiredMixin, CreateView):
     template_name = 'type/create.html'
     form_class = TypeForm
     model = Type
@@ -24,7 +25,7 @@ class TypeCreateView(CreateView):
 
 
 
-class TypeUpdateView(UpdateView):
+class TypeUpdateView(LoginRequiredMixin, UpdateView):
     model = Type
     template_name = 'type/update.html'
     form_class = TypeForm
@@ -36,7 +37,7 @@ class TypeUpdateView(UpdateView):
 
 
 
-class TypeDeleteView(DeleteView):
+class TypeDeleteView(LoginRequiredMixin, DeleteView):
     model = Type
     template_name = 'type/delete.html'
     form_class = TypeForm
