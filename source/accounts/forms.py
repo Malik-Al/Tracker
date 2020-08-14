@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django import forms
-from django.core.exceptions import ValidationError
 
 
 class UserCreationForm(forms.ModelForm):
@@ -21,14 +20,6 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        try:
-            User.objects.get(email=email)
-            raise ValidationError('User with this email already exists', code='user_email_exists')
-        except User.DoesNotExist:
-            return email
 
     class Meta:
         model = User

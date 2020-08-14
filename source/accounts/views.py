@@ -34,15 +34,7 @@ def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(data=request.POST)
         if form.is_valid():
-            user_1 = User(
-                email=form.cleaned_data['email'],
-                is_active=False)
             user = form.save()
-            # token = Token.objects.create(user=user)
-            # activation_url = HOST_NAME + reverse('accounts:user_activate') + '?token={}'.format(token)
-
-            # user_1.email_user('Регистрация на сайте localhost',
-            #                   'Для активаций перейдите по ссылке:')
             login(request, user)
             return redirect('webapp:index')
     else:
