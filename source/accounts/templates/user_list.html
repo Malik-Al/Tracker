@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ user_obj.username }}
+{% endblock %}
+
+{% block content %}
+    {% for user in user_obj %}
+    <p>Name User: {{ user.username }}</p>
+    <li><a href="{% url 'accounts:user_detail' user.pk %}">User Profile</a></li>
+    <br>
+    {% endfor %}
+
+{% endblock%}
