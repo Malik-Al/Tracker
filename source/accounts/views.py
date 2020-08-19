@@ -60,6 +60,8 @@ class UserChangePasswordView(UserPassesTestMixin, UpdateView):
         return reverse('accounts:user_detail', kwargs={'pk': self.object.pk})
 
 
+
+
 class UserListView(ListView):
     template_name = 'user_list.html'
     model = User
