@@ -4,16 +4,19 @@
     {% if user_obj == request.user %}
         <li><a href="{% url 'accounts:user_update' user_obj.pk %}">Edit Profile</a></li>
         <li><a href="{% url 'accounts:user_change_password' user_obj.pk %}">Change Password</a></li>
-{#        <li><a href="#">Change Password</a></li>#}
     {% endif %}
 {% endblock %}
 {% block content %}
    {% if user_obj.profile.avatar %}
        <img class="avatar" src="{{ user_obj.profile.avatar.url }}" width="250" height="250" alt="user picture">
+   {% else %}
+       <p><img class="avatar" src="http://vovet.ru/uploads/img/87/2d2008efd304884c51cf7c6825e12bb8-650.jpg"></p>
    {% endif %}
     <h1>Profile: {{ user_obj.username }}</h1>
     <p>First Name: {{ user_obj.first_name }}</p>
     <p>Last Name: {{ user_obj.last_name }}</p>
-     <p>Дата рождения: {{ user_obj.profile.birth_date|date:'d.m.Y' }}</p>
+    <p>Дата рождения: {{ user_obj.profile.birth_date|date:'d.m.Y' }}</p>
     <p>Email: {{ user_obj.email }}</p>
+    <p>About me:{{ user_obj.profile.about_me }}</p> <br>
+    <p>GitHub profile:{{ user_obj.profile.github_profile }}</p>
 {% endblock %}

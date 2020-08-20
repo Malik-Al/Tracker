@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.core.exceptions import ValidationError
-
+from accounts.models import Profile
 
 class UserCreationForm(forms.Form):
     username = forms.CharField(max_length=100, required=True, label='Username')
@@ -52,6 +52,9 @@ class UserCreationForm(forms.Form):
 class UserChangeForm(forms.ModelForm):
     avatar = forms.ImageField(label='Аватар', required=False)
     birth_date = forms.DateField(label='День рождения', input_formats=['%Y-%m-%d', '%d.%m.%Y'], required=False)
+    text = forms.CharField(max_length=3000, label='О себе', required=False, widget=forms.Textarea)
+    github_profile = forms.URLField(label='Профиль на GitHub', required=False)
+
 
     def get_initial_for_field(self, field, field_name):
         if field_name in self.Meta.profile_fields:
@@ -74,15 +77,16 @@ class UserChangeForm(forms.ModelForm):
         if commit:
             profile.save()
 
-
-
-
-
+    def clean_github_profile(self):
+        github_profile = self.cleaned_data.get('github_profile')
+        if not github_profile.startswith('https://github.com/') and github_profile is not '':
+            raise ValidationError('profile address is incorrect', code='wrong address')
+        return github_profile
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email']
-        profile_fields = ['avatar', 'birth_date']
+        fields = ['first_name', 'last_name', 'email', 'text', 'avatar', 'github_profile']
+        profile_fields = ['avatar', 'birth_date', 'github_profile', 'text']
         labels = {'first_name': 'Имя', 'last_name': 'Фамилия', 'email': 'Email'}
 
 
