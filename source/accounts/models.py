@@ -8,6 +8,7 @@ class Profile(models.Model):
                                 verbose_name='Пользователь')
     birth_date = models.DateField(null=True, blank=True, verbose_name='Дата рождения')
     avatar = models.ImageField(null=True, blank=True, upload_to='user_pics', verbose_name='Аватар')
+    github_profile = models.URLField(null=True, blank=False, verbose_name='Профиль на GitHub')
 
     def __str__(self):
         return self.user.get_full_name() + "'s Profile"

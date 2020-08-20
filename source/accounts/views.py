@@ -5,6 +5,7 @@ from django.contrib.auth import login
 from django.urls import reverse
 from django.views.generic import DetailView, UpdateView, ListView
 from accounts.forms import UserCreationForm, UserChangeForm, UserChangePasswordForm
+from accounts.models import Profile
 
 
 def register_view(request):
@@ -22,6 +23,7 @@ def register_view(request):
             )
             user.set_password(form.cleaned_data['password'])
             user.save()
+            Profile.objects.create(user=user)
             login(request, user)
             return redirect('webapp:index')
         else:
